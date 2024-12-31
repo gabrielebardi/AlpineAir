@@ -36,19 +36,27 @@ alpineair/
 │   ├── progress.md
 │   └── file-structure.md
 │
-├── ios/                        # iOS application (Phase 3)
-│   └── [Future iOS project structure]
-│
 ├── shared/                     # Shared code between client and server
 │   ├── constants/
 │   ├── types/
 │   └── utils/
 │
 ├── scripts/                    # Build and deployment scripts
+│   ├── setup-droplet.sh       # Initial server setup
+│   └── deploy.sh              # Manual deployment script
+│
 ├── .github/                    # GitHub workflows
+│   └── workflows/
+│       ├── ci.yml             # Continuous Integration
+│       └── cd.yml             # Continuous Deployment
+│
+├── ios/                        # iOS application (Phase 3)
+│   └── [Future iOS project structure]
+│
+├── .env.example               # Environment variables template
 ├── .gitignore
 ├── README.md
-└── package.json
+└── package.json               # Root package.json for workspaces
 ```
 
 ## Key Directories
@@ -80,6 +88,17 @@ alpineair/
 - Code shared between client and server
 - Common types and interfaces
 - Shared utilities and constants
+
+### Scripts
+- `setup-droplet.sh`: Initial server setup script
+  - Installs required packages
+  - Configures Nginx
+  - Sets up SSL certificates
+  - Installs Node.js and PM2
+- `deploy.sh`: Manual deployment script
+  - Backup functionality
+  - Database migrations
+  - Application deployment
 
 ## Naming Conventions
 
