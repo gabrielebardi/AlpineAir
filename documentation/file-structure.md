@@ -17,16 +17,12 @@ alpineair/
 │   ├── tests/                  # Frontend tests
 │   └── package.json
 │
-├── server/                      # Backend application
-│   ├── src/
-│   │   ├── controllers/       # Route controllers
-│   │   ├── models/           # Database models
-│   │   ├── routes/           # API routes
-│   │   ├── services/         # Business logic
-│   │   ├── utils/            # Utility functions
-│   │   └── types/            # TypeScript type definitions
-│   ├── tests/                 # Backend tests
-│   └── package.json
+├── api/                        # Vercel Serverless Functions
+│   ├── auth/                  # Authentication endpoints
+│   ├── flights/              # Flight management endpoints
+│   ├── bookings/            # Booking endpoints
+│   ├── webhooks/            # External service webhooks
+│   └── utils/               # Shared API utilities
 │
 ├── documentation/              # Project documentation
 │   ├── app-flow.md
@@ -36,19 +32,14 @@ alpineair/
 │   ├── progress.md
 │   └── file-structure.md
 │
-├── shared/                     # Shared code between client and server
+├── shared/                     # Shared code between client and API
 │   ├── constants/
 │   ├── types/
 │   └── utils/
 │
-├── scripts/                    # Build and deployment scripts
-│   ├── setup-droplet.sh       # Initial server setup
-│   └── deploy.sh              # Manual deployment script
-│
 ├── .github/                    # GitHub workflows
 │   └── workflows/
-│       ├── ci.yml             # Continuous Integration
-│       └── cd.yml             # Continuous Deployment
+│       └── ci.yml             # Continuous Integration
 │
 ├── ios/                        # iOS application (Phase 3)
 │   └── [Future iOS project structure]
@@ -56,27 +47,27 @@ alpineair/
 ├── .env.example               # Environment variables template
 ├── .gitignore
 ├── README.md
-└── package.json               # Root package.json for workspaces
+├── package.json               # Root package.json for workspaces
+└── vercel.json               # Vercel deployment configuration
 ```
 
 ## Key Directories
 
 ### Client
 - `components/`: Reusable UI components (buttons, forms, modals)
-- `pages/`: Page-level components
+- `pages/`: Page-level components (follows Next.js/Vercel conventions)
 - `hooks/`: Custom React hooks for shared logic
 - `services/`: API service integrations
 - `utils/`: Helper functions and utilities
 - `styles/`: Global styles and themes
 - `types/`: TypeScript interfaces and types
 
-### Server
-- `controllers/`: Request handlers
-- `models/`: Database models and schemas
-- `routes/`: API route definitions
-- `services/`: Business logic implementation
-- `utils/`: Helper functions
-- `types/`: TypeScript interfaces and types
+### API
+- `auth/`: Authentication endpoints
+- `flights/`: Flight management endpoints
+- `bookings/`: Booking management endpoints
+- `webhooks/`: External service webhook handlers
+- `utils/`: Shared API utilities and middleware
 
 ### Documentation
 - Project documentation and guides
@@ -85,27 +76,16 @@ alpineair/
 - Progress tracking
 
 ### Shared
-- Code shared between client and server
+- Code shared between client and API
 - Common types and interfaces
 - Shared utilities and constants
-
-### Scripts
-- `setup-droplet.sh`: Initial server setup script
-  - Installs required packages
-  - Configures Nginx
-  - Sets up SSL certificates
-  - Installs Node.js and PM2
-- `deploy.sh`: Manual deployment script
-  - Backup functionality
-  - Database migrations
-  - Application deployment
 
 ## Naming Conventions
 
 ### Files and Directories
 - Use kebab-case for directories: `user-profiles/`
 - React components: PascalCase with .tsx extension: `BookingCard.tsx`
-- Utilities and services: camelCase with .ts extension: `dateUtils.ts`
+- API endpoints: kebab-case with .ts extension: `create-booking.ts`
 - Test files: Same name as source + .test: `BookingCard.test.tsx`
 
 ### Code Style
@@ -113,4 +93,10 @@ alpineair/
 - Functions and variables: camelCase
 - Constants: UPPER_SNAKE_CASE
 - Interfaces: Prefix with 'I': `IBookingData`
-- Types: PascalCase: `BookingStatus` 
+- Types: PascalCase: `BookingStatus`
+
+## Vercel Configuration
+- `vercel.json`: Deployment settings and redirects
+- Environment variables managed in Vercel dashboard
+- Automatic branch deployments
+- API routes handled by serverless functions 

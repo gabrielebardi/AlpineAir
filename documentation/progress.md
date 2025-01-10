@@ -7,7 +7,7 @@
 - Initial documentation review
 - Project setup initiated
 - GitHub repository created
-- CI/CD workflows configured for Droplet deployment
+- CI/CD workflows configured
 
 ### In Progress
 - Setting up development environment
@@ -23,16 +23,16 @@
 
 2. **Development Environment**
    - [x] Set up version control
-   - [x] Configure CI/CD pipeline
+   - [ ] Configure Vercel deployment
    - [ ] Set up development tools
    - [ ] Configure testing framework
 
 3. **Infrastructure Setup**
-   - [ ] Provision DigitalOcean Droplet (2GB RAM, 1vCPU)
-   - [ ] Set up managed PostgreSQL database
-   - [ ] Set up managed Redis instance
-   - [ ] Configure Nginx and SSL
-   - [ ] Install Node.js and PM2
+   - [ ] Set up Vercel project
+   - [ ] Configure Vercel environment variables
+   - [ ] Set up PostgreSQL database (Vercel Storage or Supabase)
+   - [ ] Set up Redis instance (Upstash for Vercel)
+   - [ ] Configure custom domain and SSL
 
 4. **Core Features Development**
    - [ ] User authentication system
@@ -43,20 +43,22 @@
 
 ### Deployment Strategy
 - **Development**: Local development environment
-- **Staging/Production**: DigitalOcean Droplet
-  - Node.js application managed by PM2
-  - Nginx as reverse proxy
-  - Let's Encrypt SSL certificates
-  - Managed PostgreSQL and Redis
+- **Staging/Production**: Vercel Platform
+  - Automatic deployments from GitHub
+  - Serverless functions for API
+  - Edge functions for real-time features
+  - Zero-downtime deployments
+  - Automatic SSL/TLS
+  - Preview deployments for PRs
 
 ### Blockers/Dependencies
-- Need to set up DigitalOcean resources
+- Need to set up Vercel account and project
 - Need to establish connection with payment gateway (Stripe)
 - Need Firebase configuration for authentication
 
 ### Recent Updates
-- Switched from Kubernetes to Droplet deployment for MVP
-- Updated CI/CD workflows for simpler deployment
+- Switched to Vercel deployment for improved DX and simplified infrastructure
+- Updated deployment strategy to leverage serverless architecture
 - Initial project structure created
 
 ---
