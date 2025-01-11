@@ -10,7 +10,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@alpineair/shared": "workspace:*",
+    "@alpineair/shared": "file:../shared",
     "@prisma/client": "^5.22.0",
     "@upstash/redis": "^1.34.3",
     "firebase-admin": "^12.7.0",
