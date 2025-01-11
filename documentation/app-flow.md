@@ -1,134 +1,221 @@
-# Application Flow for AlpineAir MVP
+# AlpineAir Application Flow
 
-## Overview
-The AlpineAir MVP allows users to aggregate demand for private flights by selecting timeframes, viewing demand density, and booking private jets when enough passengers share similar preferences. Admins manage routes, pricing, and charter bookings while ensuring smooth operations.
-
----
+## MVP Routes
+For the initial MVP, we will focus on three key routes:
+1. Washington, D.C. (IAD) ↔ Geneva (GVA)
+   - Duration: 7.5 hours
+   - Base Price: $899
+2. New York (JFK) ↔ Zurich (ZRH)
+   - Duration: 7.3 hours
+   - Base Price: $849
+3. London (LHR) ↔ Zurich (ZRH)
+   - Duration: 1.7 hours
+   - Base Price: $199
 
 ## User Flow
 
-### 1. **Registration and Login**
-- **Options**:
-  - Login/Register via Apple ID.
-  - Login/Register via Email and Password.
-- **Process**:
-  - Users must create an account to access features such as viewing the heat calendar, setting preferences, and booking flights.
-  - First-time users are guided through a brief introduction about how the platform works.
+### 1. Authentication (Firebase)
+- Sign in with email/password
+  - Firebase Email/Password Authentication
+  - Error handling for invalid credentials
+  - Loading states during authentication
+- Sign in with Apple ID
+  - Firebase Apple OAuth Provider
+  - Popup-based authentication flow
+  - Error handling for failed authentication
+- Registration with email/password
+  - Firebase Email/Password Registration
+  - Validation for password requirements
+  - Error handling for existing emails
+- Protected routes requiring authentication
+  - React Router protection
+  - Automatic redirection to login
+  - Loading states while checking auth status
+- Notifications for auth events
+  - Success notifications for login/registration
+  - Error notifications for failed attempts
+  - Info notifications for logout
 
----
+### 2. Flight Search
+- Origin and destination selection (autocomplete from available routes)
+- Date selection (single or return trip)
+- Passenger count (1-9 passengers)
+- Search results showing:
+  - Available flights (2 per day: 8:00 AM and 6:00 PM departures)
+  - Prices (base price + dynamic variation)
+  - Duration
+  - Available seats
+  - Flight status
 
-### 2. **Flight Search**
-- **Step 1: Route Selection**
-  - Users select a departure and return route (e.g., ZRH → LND).
-- **Step 2: Timeframe Input**
-  - For each leg, users input:
-    - A **time slot** (specific date and time, e.g., May 3rd, 6 AM–9 AM).
-    - Or a **time frame** (range of dates and times, e.g., May 3rd, 6 AM–May 6th, 9 PM).
-  - System recommends users choose a **3–5 day timeframe** for higher matching potential.
+### 3. Booking Process
+1. Flight Selection
+   - Flight details
+   - Price breakdown
+   - Seat availability
+   - Status information
 
----
+2. Passenger Information
+   - Name
+   - Email
+   - Meal preferences
+     - Regular
+     - Vegetarian
+     - Vegan
+     - Halal
+     - Kosher
 
-### 3. **Heat Calendar Visualization**
-- **Calendar Display**:
-  - A **5-day heat calendar** divided into 3-hour slots (8 sections per day).
-  - **Color Gradient**: Light blue to dark purple, representing light to heavy interest in each slot.
-- **Tooltips**:
-  - Hovering over a time slot reveals:
-    - Number of interested passengers (e.g., "5 users interested").
-    - Trending slots with growing interest (e.g., "Demand increasing in this slot").
-    - Suggestions for better alignment (e.g., "Expanding your timeframe increases chances of matching").
+3. Payment
+   - Credit card payment
+   - Apple Pay integration
+   - Order summary
+   - Taxes and fees calculation
 
----
+4. Confirmation
+   - Booking reference
+   - Flight details
+   - Passenger information
+   - Payment summary
+   - Email confirmation
 
-### 4. **Flight Options**
-- **Existing Flights**:
-  - If a chartered flight is already scheduled, users see:
-    - Departure and return dates/times.
-    - Aircraft type and available seats (e.g., "8/10 seats filled").
-    - Discounted price compared to new bookings.
-- **Booking Requests**:
-  - Users can submit a new request for their preferred timeframe if no suitable flights exist.
+### 4. Booking Management
+- View all bookings
+- Booking details
+  - Flight information
+  - Passenger details
+  - Status updates
+- Cancel booking
+- Manage preferences
 
----
+## Data Flow
 
-### 5. **Flight Confirmation Rules**
-- **Passenger Threshold**:
-  - Default threshold: 6 passengers per flight
-  - Adjustable by admins per route
-  - System tracks both confirmed and potential bookings
-- **Pricing Structure**:
-  - Base price: 1000 CHF per flight leg
-  - Dynamic pricing adjustments by admins based on:
-    - Route popularity
-    - Time of year
-    - Remaining seats
-  - Discounted rates for filling remaining seats on confirmed flights
-- **Payment Processing**:
-  - All transactions in Swiss Francs (CHF)
-  - Refunds only processed by admins for exceptional cases
-    - Technical issues
-    - Flight cancellations
-    - Weather-related disruptions
-  - No automatic refunds for user cancellations
+### 1. Authentication
+```typescript
+// Firebase Authentication
+interface AuthState {
+  user: FirebaseUser | null;
+  loading: boolean;
+  error: Error | null;
+}
 
----
+interface LoginRequest {
+  email?: string;
+  password?: string;
+  appleIdToken?: string;
+}
 
-### 6. **Waitlist Management**
-- **Automatic Enrollment**:
-  - If a user’s preferences do not match existing flights, they are added to a waitlist.
-  - Users are notified if new flights or matching opportunities arise within their timeframe.
+interface LoginResponse {
+  user: User;
+  token: string; // Firebase ID token
+}
 
----
+// Token Refresh
+interface TokenRefresh {
+  currentUser: FirebaseUser;
+  getIdToken(forceRefresh?: boolean): Promise<string>;
+}
+```
 
-### 7. **Real-Time Notifications**
-- **Types of Notifications**:
-  - Rising demand in selected timeframes (e.g., "Slot May 3rd, 9–12 AM now trending!").
-  - Thresholds nearing or met for a specific route.
-  - Confirmation of a scheduled flight.
-- **Channels**:
-  - Notifications via email and platform dashboard.
+### 2. Flight Search
+```typescript
+SearchRequest {
+  origin: string;      // e.g., "Washington, D.C. (IAD)"
+  destination: string; // e.g., "Geneva (GVA)"
+  departureDate: string;
+  returnDate?: string;
+  passengers: number;
+}
 
----
+SearchResponse {
+  flights: Flight[];
+  pricing: {
+    basePrice: number;
+    taxes: number;
+    total: number;
+  };
+}
+```
 
-## Admin Flow
+### 3. Booking
+```typescript
+BookingRequest {
+  flightId: string;
+  passengers: {
+    name: string;
+    email: string;
+    mealPreference?: string;
+  }[];
+  paymentDetails: {
+    method: 'card' | 'apple';
+    token?: string;
+    cardDetails?: {
+      number: string;
+      expiry: string;
+      cvc: string;
+      name: string;
+    };
+  };
+}
 
-### 1. **Monitoring Demand**
-- **Heat Calendar**:
-  - Real-time view of demand density for all legs and timeframes.
-  - Highlights underperforming slots or routes.
-- **Threshold Alerts**:
-  - Automated notifications for slots nearing or meeting the passenger threshold.
+BookingResponse {
+  bookingId: string;
+  status: string;
+  confirmationCode: string;
+  flightDetails: Flight;
+  passengers: Passenger[];
+  paymentStatus: string;
+}
+```
 
----
+## Error Handling
+1. Authentication Errors
+   - Invalid credentials
+   - Account not found
+   - Registration failed
+   - Apple Sign-in failed
+   - Token refresh failed
+   - Network connectivity issues
 
-### 2. **Flight Management**
-- **Pre-Booking**:
-  - Admins pre-book charters with partner companies once thresholds are met.
-- **Adding Flights**:
-  - Scheduled flights are added to the calendar with:
-    - Exact times.
-    - Available seats.
-    - Pricing details.
-- **User Communication**:
-  - Notify all users of a confirmed flight and manage opt-out responses.
+2. Search Errors
+   - No flights available
+   - Invalid route selection
+   - Past date selection
+   - Invalid passenger count
 
----
+3. Booking Errors
+   - Payment processing issues
+   - Seat unavailability
+   - Invalid passenger information
+   - Booking timeout
 
-### 3. **Pricing Control**
-- **Dynamic Adjustments**:
-  - Admins can modify pricing for specific time slots based on demand.
-  - Offer discounts for already-scheduled flights to fill remaining seats.
+4. System Errors
+   - API connectivity issues
+   - Authentication failures
+   - Session timeouts
+   - Payment gateway errors
 
----
+## Performance Considerations
+1. Client-side Caching
+   - Available routes
+   - Recent searches
+   - User preferences
+   - Authentication state
+   - Firebase token caching
 
-### 4. **Reporting and Insights**
-- **Metrics Tracked**:
-  - Total interest per leg.
-  - Profitable and underperforming slots.
-  - Passenger trends and preferences.
+2. API Response Times
+   - Search results < 2s
+   - Booking confirmation < 5s
+   - Payment processing < 3s
+   - Auth operations < 1s
 
----
+3. Error Recovery
+   - Automatic retry for failed requests
+   - Graceful degradation
+   - Offline support for basic features
+   - Token refresh handling
 
-## Summary
-This flow ensures AlpineAir MVP delivers a seamless experience for users while providing admins with the tools needed to manage operations effectively. Each step prioritizes demand aggregation and operational efficiency, enabling successful private flight scheduling.
+4. User Experience
+   - Loading states for all async operations
+   - Error messages with clear instructions
+   - Success notifications for key actions
+   - Form validation with immediate feedback
 

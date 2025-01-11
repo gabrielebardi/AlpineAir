@@ -1,87 +1,115 @@
+# AlpineAir Development Roadmap
 
-# Roadmap for AlpineAir MVP
+## Phase 1: Desktop Web Application (MVP)
+**Timeline**: 5 weeks
+**Status**: In Progress
 
-## Phase 1: Initial Development (Desktop Web App)
-**Timeline: 3–4 Months**
+### Week 1-2: Core Development
+- [x] Project setup and configuration
+- [x] API services layer implementation
+- [x] MVP routes setup (IAD-GVA, JFK-ZRH, LHR-ZRH)
+- [x] Flight search interface
+- [x] Flight results display
+- [x] Basic booking flow
+- [x] Form validation with react-hook-form and zod
 
-### Key Deliverables:
-1. **Core Web Application**:
-   - Build a responsive desktop website in dark mode.
-   - Implement heat calendar with timeframes and demand visualization (light blue to dark purple gradient).
-   - Develop user functionality:
-     - Registration and login via Apple ID or email.
-     - Timeframe-based flight search and waitlist management.
-     - Flight booking with passenger details and Stripe payment integration (including Apple Pay).
-   - Real-time notifications for demand density and booking updates.
-   - Tooltip and popover features for detailed insights.
+### Week 3-4: Feature Enhancement
+- [x] User authentication with Firebase
+- [x] User dashboard
+- [x] Booking management
+- [x] Account settings
+- [ ] Payment integration with Stripe (to be implemented post-deployment)
 
-2. **Admin Dashboard**:
-   - Real-time demand monitoring.
-   - Manage routes, time slots, pricing, and pre-booked flights.
-   - Threshold alerts and user notification management.
-   - Pricing adjustments and reporting tools for operational insights.
+### Week 5: Testing & Optimization
+- [ ] Unit testing
+- [ ] Integration testing
+- [ ] Performance optimization
+- [ ] Bug fixes
+- [ ] Documentation updates
 
-3. **Testing and Quality Assurance**:
-   - Usability testing with focus groups.
-   - Load testing for scalability.
-   - Bug tracking and resolution.
+## Phase 2: Beta Launch
+**Timeline**: 4 weeks
+**Status**: Not Started
 
----
+### Infrastructure
+- [ ] Production database setup
+- [ ] Caching layer implementation
+- [ ] Monitoring and logging
+- [ ] Error tracking
 
-## Phase 2: Beta Launch and Feedback Collection
-**Timeline: 1–2 Months**
+### Features
+- [ ] Advanced search filters
+- [ ] Price alerts
+- [ ] Seat selection
+- [ ] Meal preferences
+- [ ] Email notifications
 
-### Key Deliverables:
-1. **Beta Testing**:
-   - Launch the platform for selected users on high-demand routes.
-   - Collect user feedback on the heat calendar, booking process, and overall UX.
+### Operations
+- [ ] Customer support system
+- [ ] Analytics integration
+- [ ] Performance monitoring
+- [ ] Security auditing
 
-2. **Refinements**:
-   - Address usability issues and incorporate feedback.
-   - Optimize admin tools for efficiency and ease of use.
+## Phase 3: iOS Application
+**Timeline**: 8 weeks
+**Status**: Not Started
 
-3. **Marketing and Onboarding**:
-   - Develop onboarding materials to educate users on platform functionality.
-   - Initiate marketing campaigns targeting high-tier travelers.
+### Development
+- [ ] iOS app architecture
+- [ ] UI/UX design
+- [ ] Core features implementation
+- [ ] Apple ID integration
+- [ ] Push notifications
 
----
+### Testing
+- [ ] iOS-specific testing
+- [ ] TestFlight beta
+- [ ] Performance optimization
+- [ ] App Store submission
 
-## Phase 3: iOS App Development
-**Timeline: 4–6 Months (After Web App Completion)**
+## Phase 4: Expansion
+**Timeline**: Ongoing
+**Status**: Not Started
 
-### Key Deliverables:
-1. **iOS App Design and Development**:
-   - Design a sleek, mobile-friendly app maintaining the dark mode aesthetic.
-   - Implement all core features from the web app:
-     - Registration and login (Apple ID and email).
-     - Heat calendar visualization.
-     - Flight search, booking, and waitlist management.
-     - Real-time notifications and pricing updates.
-   - Integrate Stripe for mobile payments, including Apple Pay.
+### Route Expansion
+- [ ] Additional European routes
+- [ ] North American routes
+- [ ] Asian routes
+- [ ] Dynamic pricing model
 
-2. **Testing and Deployment**:
-   - Conduct rigorous app testing across iOS devices.
-   - Launch on the App Store with a targeted marketing campaign.
+### Feature Enhancement
+- [ ] Loyalty program
+- [ ] Corporate booking portal
+- [ ] Group booking system
+- [ ] Multi-city flights
 
----
+### Platform Growth
+- [ ] Android application
+- [ ] API marketplace
+- [ ] Partner integrations
+- [ ] White-label solutions
 
-## Phase 4: Post-Launch Expansion and Optimization
-**Timeline: Ongoing**
+## Success Metrics
+1. **MVP Phase**
+   - Successfully process 100 bookings
+   - Achieve 95% uptime
+   - < 2s average response time
+   - Zero payment processing errors (after Stripe integration)
 
-### Key Deliverables:
-1. **New Features**:
-   - Introduce additional functionality (e.g., loyalty programs, group bookings).
-   - Expand to Android devices and optimize for tablets.
+2. **Beta Phase**
+   - 1000+ registered users
+   - 80% booking completion rate
+   - < 1% error rate
+   - 4.5+ star user rating
 
-2. **Operational Expansion**:
-   - Add new routes and partners as demand grows.
-   - Refine algorithms for better demand prediction and dynamic pricing.
+3. **Mobile Phase**
+   - 10,000+ app downloads
+   - 70% user retention
+   - 4+ star App Store rating
+   - 50% mobile booking rate
 
-3. **Performance Monitoring**:
-   - Continuously track user engagement, booking rates, and profitability.
-   - Use analytics to identify and address bottlenecks.
-
----
-
-## Summary
-The roadmap ensures AlpineAir’s MVP delivers a robust desktop web application as a foundation, followed by an iOS app to enhance user accessibility. This phased approach balances core functionality with scalability for long-term success.
+4. **Expansion Phase**
+   - 50+ active routes
+   - 100,000+ monthly users
+   - 90% customer satisfaction
+   - 30% month-over-month growth
