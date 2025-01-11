@@ -4,10 +4,10 @@
   "version": "0.1.0",
   "scripts": {
     "build": "cd client && npm install && npm run build",
-    "dev": "pnpm -r run dev",
-    "lint": "pnpm -r run lint",
-    "test": "pnpm -r run test",
-    "type-check": "pnpm -r run type-check"
+    "dev": "npm run dev --workspace=client",
+    "lint": "npm run lint --workspaces",
+    "test": "npm run test --workspaces",
+    "type-check": "npm run type-check --workspaces"
   },
   "workspaces": [
     "client",
