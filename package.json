@@ -1,26 +1,17 @@
 {
   "name": "alpineair",
-  "version": "0.1.0",
   "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "cd client && npm install && npm run build",
+    "dev": "pnpm -r run dev",
+    "lint": "pnpm -r run lint",
+    "test": "pnpm -r run test",
+    "type-check": "pnpm -r run type-check"
+  },
   "workspaces": [
     "client",
-    "api",
+    "server",
     "shared"
-  ],
-  "scripts": {
-    "dev": "npm run dev -w client",
-    "build": "npm run build -ws",
-    "test": "npm run test -ws",
-    "lint": "eslint . --ext .ts,.tsx",
-    "type-check": "npm run type-check -ws"
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.19.0",
-    "@typescript-eslint/parser": "^6.19.0",
-    "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.1.3",
-    "prettier": "^3.2.4",
-    "typescript": "^5.3.3"
-  }
+  ]
 } 
